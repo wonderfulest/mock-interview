@@ -154,7 +154,6 @@
         <div class="subtitle" style="margin-top: 8px;">已保存 {{ Object.keys(answers).length }} 道题的答案与评分，可用于年终述职量化：如“每周 ×2 次模拟面试，近 4 周平均分 {{ avgScore }}，覆盖 5 大方向、20+ 核心知识点”。</div>
       </div>
 
-      <footer class="small" style="text-align:center; padding-bottom: 8px;">© Mock Interview · 本地运行 · 不上传数据</footer>
     </div>
   </div>
 </template>
@@ -168,6 +167,8 @@ import { consul } from '../data/consul'
 import { trace } from '../data/trace'
 import { perf } from '../data/perf'
 import { design } from '../data/design'
+import { mysql } from '../data/mysql'
+import { distributed } from '../data/distributed'
 
 const route = useRoute()
 const initialId = ref<string | null>((route.query.q as string) || null)
@@ -178,14 +179,18 @@ const QUESTION_BANK: Question[] = [
   ...trace,
   ...perf,
   ...design,
+  ...mysql,
+  ...distributed,
 ]
 
 const TRACKS: Track[] = [
   { key: 'Redis', label: 'Redis' },
   { key: 'Consul', label: 'Consul' },
+  { key: 'MySQL', label: 'MySQL' },
   { key: '链路追踪', label: '链路追踪' },
   { key: '交易调优', label: '交易调优' },
   { key: '系统设计', label: '系统设计' },
+  { key: '分布式系统', label: '分布式系统' },
 ]
 
 const selectedTracks = ref<string[]>(TRACKS.map(t => t.key))
