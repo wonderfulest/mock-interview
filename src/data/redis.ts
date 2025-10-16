@@ -60,6 +60,49 @@ export const redis: Question[] = [
     tags: ["高可用", "哨兵", "cluster"],
   },
   {
+    id: "redis-4-1",
+    track: "Redis",
+    difficulty: 3,
+    prompt: "Redis Sentinel 的选主（Failover）流程？",
+    points: [
+      "故障检测：SDOWN/ODOWN",
+      "选举：Leader Sentinel 通过半数确认选举出 Leader，主导故障转移（FAILOVER）, 类比 Raft 选举机制, 通过 epoch 记录任期",
+      "选主：Leader Sentinel 选主，RC 优先级、从库复制偏移量、从库延迟、节点id",
+      "故障转移：Leader 通知新主晋升, 旧主下线, 其他从节点重新指向新主进行复制，广播给客户端切换主从",
+    ],
+    answer:
+      "本质上是一个分布式投票与选举机制，目标是在主节点宕机时，自动选出一个最合适的从节点升级为新主。分为四个阶段\n" + 
+      "一、故障检测阶段: 主观下线（SDOWN）: 从节点 Ping 无响应；客观下线（ODOWN）: 从节点 gossip 后，通过半数\n" +
+      "二、选举 Leader Sentinel: 多个 Sentinel 通过半数确认选举出 Leader，主导故障转移（FAILOVER）, 类比 Raft 选举机制, 通过 epoch 记录任期\n" +
+      "三、挑选新的主节点（即将从库升为主）：Leader进行选主，策略：RC 优先级、从库复制偏移量、从库延迟、节点id\n" +
+      "四、执行 Failover 过程: LEADER 通知新主晋升, 旧主下线, 其他从节点重新指向新主进行复制，广播给客户端切换主从",
+
+    tags: ["高可用", "哨兵", "一致性"],
+  },
+  {
+    id: "redis-4-2",
+    track: "Redis",
+    difficulty: 3,
+    prompt: "Redis Cluster？",
+    points: [
+      "故障检测：SDOWN/ODOWN",
+      "选举：Leader Sentinel 通过半数确认选举出 Leader，主导故障转移（FAILOVER）, 类比 Raft 选举机制, 通过 epoch 记录任期",
+      "选主：Leader Sentinel 选主，RC 优先级、从库复制偏移量、从库延迟、节点id",
+      "故障转移：Leader 通知新主晋升, 旧主下线, 其他从节点重新指向新主进行复制，广播给客户端切换主从",
+    ],
+    answer:
+      "Sentinel 解决的是「单主多从」的高可用；\n" + 
+      "Cluster 解决的是「多主多从」的高可用 + 分布式存储 + 自动路由。\n" + 
+      "一、Redis Cluster 架构图：3主3从\n" +
+      "核心机制一：数据分片（Hash Slot）\n" +
+      "核心机制二：节点通信（Gossip 协议）\n" +
+      "核心机制三：故障转移（Failover 流程）\n" +
+      "核心机制四：客户端路由逻辑\n" +
+      "核心机制五：重新分片（Rebalance）",
+
+    tags: ["高可用", "哨兵", "一致性"],
+  },
+  {
     id: "redis-5",
     track: "Redis",
     difficulty: 3,

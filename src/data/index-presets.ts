@@ -35,4 +35,12 @@ export const indexPresets: Record<string, GroupPreset[]> = {
     { title: '🔒 锁 / ID / 限流', ids: ['distributed-6','distributed-14','distributed-15'] },
     { title: '🛰 跨机房与可观测', ids: ['distributed-16','distributed-18','distributed-19','distributed-20','distributed-11'] },
   ],
+  batch: [
+    { title: '🔎 索引与执行计划', ids: ['batch-1','batch-4','batch-9','batch-10','batch-11','batch-20'] },
+    { title: '🔒 事务与锁/MVCC', ids: ['batch-3','batch-6','batch-7'] },
+    { title: '🧱 存储引擎与日志', ids: ['batch-8','batch-13','batch-14'] },
+    { title: '⚡ 性能优化与慢查询', ids: ['batch-15','batch-16','batch-18','batch-19'] },
+    { title: '🔁 复制与高可用', ids: ['batch-17','batch-5'] },
+    { title: '🧰 工程实践/其他', ids: ['batch-2','batch-12'] },
+  ],
 };

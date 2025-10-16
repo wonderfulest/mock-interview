@@ -5,6 +5,7 @@ export interface Question {
   prompt: string
   points: string[]
   answer: string
+  analysis?: string
   tags: string[]
 }
 

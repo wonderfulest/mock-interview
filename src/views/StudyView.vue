@@ -20,12 +20,13 @@
 
 <script lang="ts" setup>
 const tracks = [
+  { key: 'batch', label: '批量系统', path: '/index/batch' },
+  { key: 'distributed', label: '分布式系统', path: '/index/distributed' },
   { key: 'mysql', label: 'MySQL', path: '/index/mysql' },
   { key: 'redis', label: 'Redis', path: '/index/redis' },
   { key: 'consul', label: 'Consul', path: '/index/consul' },
   { key: 'trace', label: '链路追踪', path: '/index/trace' },
   { key: 'perf', label: '交易调优', path: '/index/perf' },
   { key: 'design', label: '系统设计', path: '/index/design' },
-  { key: 'distributed', label: '分布式系统', path: '/index/distributed' },
 ]
 </script>

@@ -39,6 +39,9 @@
                   </div>
                   <div v-if="isShown(q.id)" class="small answer" style="color:#334155;">
                     <div v-for="(line, idx) in splitAnswer(q.answer)" :key="idx">{{ idx + 1 }}. {{ line }}</div>
+                    <div v-if="q.analysis" style="margin-top:6px;">
+                      <div v-for="(line, idx) in splitAnswer(q.analysis)" :key="'a-'+idx">{{ idx + 1 }}. {{ line }}</div>
+                    </div>
                   </div>
                 </div>
               </td>
@@ -79,6 +82,9 @@
               </div>
               <div v-if="isShown(q.id)" class="small answer" style="color:#334155; margin-left:40px;">
                 <div v-for="(line, idx) in splitAnswer(q.answer)" :key="idx">{{ idx + 1 }}. {{ line }}</div>
+                <div v-if="q.analysis" style="margin-top:6px;">
+                  <div v-for="(line, idx) in splitAnswer(q.analysis)" :key="'a-'+idx">{{ idx + 1 }}. {{ line }}</div>
+                </div>
               </div>
             </div>
           </div>

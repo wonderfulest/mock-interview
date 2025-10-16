@@ -44,6 +44,33 @@ export const mysql: Question[] = [
     tags: ["事务", "隔离级别", "MVCC"]
   },
   {
+    id: "mysql-migrate-1",
+    track: "MySQL-洗库",
+    difficulty: 4,
+    prompt: "如何设计一套千万级 MySQL 三表（A-B-C 关联）洗库方案，确保数据清洗、迁移与切换安全可控？",
+    points: [
+        "一、数据清洗规则：去重（ROW_NUMBER）、格式标准化（手机号、邮箱、时间）、枚举映射、孤儿数据清理、异常兜底（NULL/默认值）",
+        "二、影子表策略：创建 *_new 影子表，仅保留主外键，不建二级索引；在该阶段完成结构变更（字段类型、默认值、命名调整）",
+        "三、分片回灌：按主键范围分批导入（A→B→C），使用 FORCE INDEX 固定执行计划并JOIN _new 父表去孤儿",
+        "四、增量同步：触发器适合同库小规模；CDC（binlog）适合高并发、跨库场景，需保证幂等与顺序",
+        "五、对账校验：行数比对、外键一致性检查、CRC 抽样校验字段一致性、异常审计留痕",
+        "六、索引与性能：导入后补建覆盖索引，结合慢查询日志验证执行计划与性能回归",
+        "七、切换与回滚：停写窗口内最终对账后，RENAME TABLE 原子切换；保留 *_bak 7~14 天可回滚",
+        "八、参数优化与执行稳定：导入期调低刷盘参数、批事务 50k、FORCE INDEX 保计划稳定、软删孤儿数据可追溯"
+    ],
+    answer:
+        "完整流程如下：\n" +
+        "1️⃣ 清洗规则：通过窗口函数去重、正则格式化字段、JOIN 维表转码、LEFT JOIN 清孤儿、非法值统一 NULL。\n" +
+        "2️⃣ 建影子表：A_new/B_new/C_new 不建索引，仅保留 PK/FK，并在此阶段完成结构调整。\n" +
+        "3️⃣ 分片回灌：A→B→C 顺序分批导入，每批 50k~200k，FORCE INDEX 固定计划，JOIN _new 父级去孤儿。\n" +
+        "4️⃣ 增量同步：小规模可用触发器（INSERT/UPDATE/DELETE→_new），大规模用 CDC（binlog→Kafka/Flink→_new）。\n" +
+        "5️⃣ 对账：行数比对、孤儿检测=0、CRC32 抽样校验、审计修复日志。\n" +
+        "6️⃣ 补索引与压测：导入完成后统一 ADD INDEX，并用慢日志/性能指标验证。\n" +
+        "7️⃣ 切换与回滚：停写、最终对账、RENAME TABLE 原子切换；保留 *_bak 可回滚。\n" +
+        "8️⃣ 性能优化：innodb_flush_log_at_trx_commit=2、sync_binlog=0、显式事务、FORCE INDEX/STRAIGHT_JOIN 固定执行计划。",
+    tags: ["洗库方案","影子表","增量同步","对账校验","原子切换","高性能迁移"]
+  },
+  {
     id: "mysql-4",
     track: "MySQL",
     difficulty: 4,
